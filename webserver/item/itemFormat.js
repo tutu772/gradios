@@ -28,7 +28,7 @@ class item {
         else if(appliedObj == "Player") {
             return [
                 "maxHealth", "evasion", "speed", "image", "animation",
-                "always", "colideEnemy", "moving"
+                "always", "colideEnemy", "moving", "invincibleTime"
             ];
         }
     }
@@ -50,8 +50,8 @@ laser_item.addAbility("fireRate", "Bullets", x => x*3);
 laser_item.addAbility("type", "Bullets", x => "laser");
 laser_item.addAbility("piercing", "Bullets", x => 0);
 laser_item.addAbility("firing", "Bullets", (bulletObj, currentBullet) => {
-    currentBullet.body.velocity.x = Player.sprite.body.velocity.x;
-    currentBullet.body.velocity.y = Player.sprite.body.velocity.y;
+    currentBullet.body.x = Player.sprite.body.x + bulletObj.info.initValue.position.x;
+    currentBullet.body.y = Player.sprite.body.y;
 });
 laser_item.addAbility("animation", "Bullets", obj => {
     obj.animations.add('shootBeam', [0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,4]);
@@ -111,6 +111,15 @@ fireRateUp_item.addAbility("fireRate", "Bullets", x => x-0.1);
 var playerSpeedUp_item = new item("speedUp", "common");
 playerSpeedUp_item.addAbility("speed", "Player", x => x+10);
 
+var superArmer_item = new item("superArmer", "common");
+
+superArmer_item.addAbility("invincibleTime", "Player", x => {
+        console.log(game.time.now);
+        return game.time.now + 15000;
+    });
+
+ 
+
+
 
 // var Shotgun_item = new item("Shotgun", "uncommon");
-
